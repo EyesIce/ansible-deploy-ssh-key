@@ -1,0 +1,28 @@
+---
+- hosts: all
+  become: yes
+  become_user: root
+  become_method: sudo
+  tasks:
+    - name: create local user account on the target server
+      user:
+        name: "{{ item }}"
+        comment: ''
+        shell: /bin/bash
+        append: yes
+        groups: sudo
+        generate_ssh_key: no
+      with_items:
+        - user1
+        - user2
+        - user3
+    - name: upload ssh public key to users authorized keys file
+      ansible.posix.authorized_key:
+        user: "{{ item }}"
+        state: present
+        manage_dir: yes
+        key: "{{ lookup('file', 'ssh_public/{{item}}.pub') }}"
+      with_items:
+        - user1
+        - user2
+        - user3
