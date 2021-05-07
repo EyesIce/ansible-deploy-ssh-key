@@ -5,3 +5,6 @@ Use this script ansible to deploy ssh public key of multiple user in multi host.
 - create a folder in main project and call it ssh_public
 - add the public keys in the folder and name those like: user.pub
 - change iventory variable
+
+#### Run playbook with:
+`ansible-playbook -i inventory.ini addSshPublicKey.yml`
